@@ -1,0 +1,2 @@
+<config comPort="COM4" targetIP="localhost" targetPort="6100" entryMsg="SV:1200:1" exitMsg="SV:1200:0">
+</config>

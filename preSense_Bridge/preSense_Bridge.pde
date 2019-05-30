@@ -17,9 +17,12 @@ int port        = 6100;
 String entryUDP="SV:1200:1\n";
 String exitUDP="SV:1200:0\n";
 
+//OTHER VARS
+boolean curr=false;
+boolean prev=false;
 
-void setup()
-{
+
+void setup() {
   frameRate(60);
   String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
   myPort = new Serial(this, portName, 9600);
@@ -27,8 +30,7 @@ void setup()
   udp = new UDP( this, 6000 );
 }
 
-void draw()
-{
+void draw() {
   background(255, 255, 255);
   if ( myPort.available() > 0) 
   {
@@ -37,18 +39,30 @@ void draw()
   if (val!=null) {
 
     if (val.equals(entryVal)) {
-      sendUDPacket(entryUDP);
-
+      //sendUDPacket(entryUDP);
+      curr=true;
       background(0, 255, 0);
     } else if (val.equals(exitVal)) {
 
-
-      sendUDPacket(exitUDP);
+      curr=false;
+      //sendUDPacket(exitUDP);
       background(255, 0, 0);
     }
   }
+  checkStatus();
+  statusUpdate();
 }
 
+void checkStatus() {
+  if ((curr==true)&&(prev==false)) {
+    sendUDPacket(entryUDP);
+  } else if ((curr==false)&&(prev==true)) {
+    sendUDPacket(exitUDP);
+  }
+}
+void statusUpdate() {
+  prev=curr;
+}
 void sendUDPacket(String input) {
   udp.send( input, ip, port );
 }

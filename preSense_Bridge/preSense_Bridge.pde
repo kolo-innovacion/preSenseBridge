@@ -1,39 +1,54 @@
+
+//SERIAL VARIABLES
 import processing.serial.*;
-Serial myPort;  // Create object from Serial class
-String val;     // Data received from the serial port
+Serial myPort;
+String val;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
+
+//UDP VARIABLES
+import hypermedia.net.*;
+UDP udp;
+
+//String ip       = "192.168.0.17";  // the remote IP address
+String ip       = "localhost";  // the remote IP address
+int port        = 6100;
+
+String entryUDP="SV:1200:1\n";
+String exitUDP="SV:1200:0\n";
+
 
 void setup()
 {
   frameRate(60);
-  // I know that the first port in the serial list on my mac
-  // is Serial.list()[0].
-  // On Windows machines, this generally opens COM1.
-  // Open whatever port is the one you're using.
   String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
   myPort = new Serial(this, portName, 9600);
+
+  udp = new UDP( this, 6000 );
 }
 
 void draw()
 {
   background(255, 255, 255);
   if ( myPort.available() > 0) 
-  {  // If data is available,
+  {
     val = myPort.readStringUntil('\n');         // read it and store it in val
   }
   if (val!=null) {
-    //println("SOMETHING");
 
     if (val.equals(entryVal)) {
-      println("ENTRY DETECTED");
+      sendUDPacket(entryUDP);
 
       background(0, 255, 0);
     } else if (val.equals(exitVal)) {
 
-      println("XXXXXXXXXXXXXX");
 
+      sendUDPacket(exitUDP);
       background(255, 0, 0);
     }
-  } //print it out in the console
+  }
+}
+
+void sendUDPacket(String input) {
+  udp.send( input, ip, port );
 }

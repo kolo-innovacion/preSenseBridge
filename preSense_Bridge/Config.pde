@@ -16,7 +16,7 @@ void loadConfig() {
   } else {
   }
 
-  verboseConfig();
+  //verboseConfig();
 }
 
 void verboseConfig() {

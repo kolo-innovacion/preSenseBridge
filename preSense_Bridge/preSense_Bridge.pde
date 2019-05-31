@@ -30,6 +30,7 @@ boolean prev=false;
 
 
 void setup() {
+  size(250, 150);
   loadConfig();
   frameRate(30);
   //String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
@@ -40,6 +41,7 @@ void setup() {
 
 void draw() {
   background(255, 255, 255);
+  showInfo();
   if ( myPort.available() > 0) 
   {
     val = myPort.readStringUntil('\n');         // read it and store it in val
@@ -50,11 +52,13 @@ void draw() {
       //sendUDPacket(entryUDP);
       curr=true;
       background(0, 255, 0);
+      showInfo();
     } else if (val.equals(exitVal)) {
 
       curr=false;
       //sendUDPacket(exitUDP);
       background(255, 0, 0);
+      showInfo();
     }
   }
   checkStatus();
@@ -73,4 +77,20 @@ void statusUpdate() {
 }
 void sendUDPacket(String input) {
   udp.send( input, targetIP, targetPort );
+}
+
+void showInfo() {
+  int aux=25;
+  fill(0);
+
+  text("Serial port: "+comPort, 10, aux);
+  aux+=20;
+  text("Target IP: "+targetIP+" on port "+targetPort, 10, aux);
+  aux+=20;  
+  text("UDP msg on entry:  "+entryUDP, 10, aux);
+  aux+=20;  
+  text("UDP msg on exit:  "+exitUDP, 10, aux);
+  aux+=20;
+  text("END OF LINE after msg:  "+eol, 10, aux);
+  aux+=20;
 }

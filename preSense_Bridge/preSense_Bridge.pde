@@ -2,6 +2,7 @@
 //SERIAL VARIABLES
 import processing.serial.*;
 Serial myPort;
+String comPort;
 String val;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
@@ -11,8 +12,8 @@ import hypermedia.net.*;
 UDP udp;
 
 //String ip       = "192.168.0.17";  // the remote IP address
-String ip       = "localhost";  // the remote IP address
-int port        = 6100;
+String targetIP = "localhost";  // the remote IP address
+int targetPort = 6100;
 
 String entryUDP="SV:1200:1\n";
 String exitUDP="SV:1200:0\n";
@@ -23,7 +24,8 @@ boolean prev=false;
 
 
 void setup() {
-  frameRate(60);
+  loadConfig();
+  frameRate(30);
   String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
   myPort = new Serial(this, portName, 9600);
 
@@ -64,5 +66,5 @@ void statusUpdate() {
   prev=curr;
 }
 void sendUDPacket(String input) {
-  udp.send( input, ip, port );
+  udp.send( input, targetIP, targetPort );
 }

@@ -8,7 +8,7 @@ String version="NOT DETECTED";
 int verStrLength=6;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
-boolean serconnect=true;
+boolean serConnect=true;
 
 //UDP VARIABLES
 import hypermedia.net.*;
@@ -36,16 +36,8 @@ void setup() {
   size(250, 150);
   loadConfig();
   frameRate(30);
-  try {
-    myPort = new Serial(this, comPort, 9600);
 
-    //version=myPort.readStringUntil('\n');  
-    //println(version);
-  }
-  catch(Exception e) {
-    println(e);
-    serconnect=false;
-  }
+  serConnect=attemptSerial();
 
   udp = new UDP( this, 6000 );
 }
@@ -53,13 +45,14 @@ void setup() {
 void draw() {
   background(255, 255, 255);
   showInfo();
-  if (serconnect) {
+  if (serConnect) {
 
     if ( myPort.available() > 0) 
     {
       val = myPort.readStringUntil('\n');         // read it and store it in val
     }
   } else {
+    serConnect=attemptSerial();
   }
   if (val!=null) {
 
@@ -116,4 +109,18 @@ void showInfo() {
   aux+=20;
   text("END OF LINE after msg:  "+eol, 10, aux);
   aux+=20;
+}
+
+boolean attemptSerial() {
+  try {
+    myPort = new Serial(this, comPort, 9600);
+
+    //version=myPort.readStringUntil('\n');  
+    //println(version);
+  }
+  catch(Exception e) {
+    println(e);
+    return false;
+  }
+  return true;
 }

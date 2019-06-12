@@ -31,6 +31,10 @@ String exitUDP;
 boolean curr=false;
 boolean prev=false;
 
+//gui vars
+int connTrue=color(0, 255, 0);
+int connFalse=color(255, 0, 0);
+
 
 void setup() {
   size(250, 150);
@@ -95,8 +99,12 @@ void sendUDPacket(String input) {
 
 void showInfo() {
   int aux=25;
-  fill(0);
 
+  fill(connTrue);
+  noStroke();
+  rect(0, 0, width, 50);
+
+  fill(0);
   text("Serial port: "+comPort, 10, aux);
   aux+=20;
   text("Firmware version: "+version, 10, aux);
@@ -119,7 +127,7 @@ boolean attemptSerial() {
     //println(version);
   }
   catch(Exception e) {
-    println(e);
+    //println(e);
     return false;
   }
   return true;

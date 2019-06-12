@@ -8,7 +8,7 @@ String version="NOT DETECTED";
 int verStrLength=6;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
-boolean serconnect=false;
+boolean serconnect=true;
 
 //UDP VARIABLES
 import hypermedia.net.*;
@@ -38,11 +38,13 @@ void setup() {
   frameRate(30);
   try {
     myPort = new Serial(this, comPort, 9600);
+
     //version=myPort.readStringUntil('\n');  
     //println(version);
   }
   catch(Exception e) {
     println(e);
+    serconnect=false;
   }
 
   udp = new UDP( this, 6000 );
@@ -51,9 +53,13 @@ void setup() {
 void draw() {
   background(255, 255, 255);
   showInfo();
-  if ( myPort.available() > 0) 
-  {
-    val = myPort.readStringUntil('\n');         // read it and store it in val
+  if (serconnect) {
+
+    if ( myPort.available() > 0) 
+    {
+      val = myPort.readStringUntil('\n');         // read it and store it in val
+    }
+  } else {
   }
   if (val!=null) {
 
@@ -73,7 +79,7 @@ void draw() {
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
       //println(val.length());
       version=val;
-      serconnect=true;
+      //serconnect=true;
     }
   }
   checkStatus();

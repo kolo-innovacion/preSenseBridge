@@ -6,6 +6,7 @@ String comPort;
 String val;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
+boolean serconnect=false;
 
 //UDP VARIABLES
 import hypermedia.net.*;
@@ -33,8 +34,13 @@ void setup() {
   size(250, 150);
   loadConfig();
   frameRate(30);
-  //String portName = Serial.list()[0]; //change the 0 to a 1 or 2 etc. to match your port
-  myPort = new Serial(this, comPort, 9600);
+  try {
+    myPort = new Serial(this, comPort, 9600);
+    println(myPort);
+  }
+  catch(Exception e) {
+    println(e);
+  }
 
   udp = new UDP( this, 6000 );
 }

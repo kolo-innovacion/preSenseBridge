@@ -4,6 +4,8 @@ import processing.serial.*;
 Serial myPort;
 String comPort;
 String val;
+String version="NOT DETECTED";
+int verStrLength=6;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
 boolean serconnect=false;
@@ -36,7 +38,8 @@ void setup() {
   frameRate(30);
   try {
     myPort = new Serial(this, comPort, 9600);
-    println(myPort);
+    //version=myPort.readStringUntil('\n');  
+    //println(version);
   }
   catch(Exception e) {
     println(e);
@@ -65,6 +68,12 @@ void draw() {
       //sendUDPacket(exitUDP);
       background(255, 0, 0);
       showInfo();
+    } else if (val.length()==verStrLength) {
+      //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
+      //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
+      //println(val.length());
+      version=val;
+      serconnect=true;
     }
   }
   checkStatus();
@@ -90,6 +99,8 @@ void showInfo() {
   fill(0);
 
   text("Serial port: "+comPort, 10, aux);
+  aux+=20;
+  text("Firmware version: "+version, 10, aux);
   aux+=20;
   text("Target IP: "+targetIP+" on port "+targetPort, 10, aux);
   aux+=20;  

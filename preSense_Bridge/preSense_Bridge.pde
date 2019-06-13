@@ -32,12 +32,11 @@ boolean curr=false;
 boolean prev=false;
 
 //gui vars
-int connTrue=color(0, 255, 0);
-int connFalse=color(255, 0, 0);
+
 
 
 void setup() {
-  size(350, 150);
+  size(250, 200);
   loadConfig();
   guiSetup();
   frameRate(60);
@@ -48,9 +47,9 @@ void setup() {
 }
 
 void draw() {
-  background(255, 255, 255);
+  background(255);
   showInfo();
-  image(absent, 200, 100);
+  image(current, 60, 150);
 
   readFromSensor();
   reactReading();
@@ -68,13 +67,15 @@ void reactReading() {
     if (val.equals(entryVal)) {
       //sendUDPacket(entryUDP);
       curr=true;
-      background(255, 191, 0);
+      //background(255, 191, 0);
+      //current=entry;
       showInfo();
     } else if (val.equals(exitVal)) {
 
       curr=false;
       //sendUDPacket(exitUDP);
-      background(255, 255, 255);
+      //background(255, 255, 255);
+      current=absent;
       showInfo();
     } else if (val.length()==verStrLength) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
@@ -101,8 +102,10 @@ void readFromSensor() {
 void checkStatus() {
   if ((curr==true)&&(prev==false)) {
     sendUDPacket(entryUDP);
+    current=entry;
   } else if ((curr==false)&&(prev==true)) {
     sendUDPacket(exitUDP);
+    //current=exit;
   }
 }
 void statusUpdate() {

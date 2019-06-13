@@ -1,5 +1,5 @@
 XML config;
-boolean eol;
+boolean linefeed;
 void loadConfig() {
   config = loadXML("config.xml");
 
@@ -8,9 +8,9 @@ void loadConfig() {
   targetPort=config.getInt("targetPort", 5000);
   entryUDP=config.getString("entryMsg", "SV:1200:1\n");
   exitUDP=config.getString("exitMsg", "SV:1200:0\n");
-  eol=boolean(config.getInt("EOL", 1));
+  linefeed=boolean(config.getInt("LF", 1));
 
-  if (eol) {
+  if (linefeed) {
     entryUDP=entryUDP+"\n";
     exitUDP=exitUDP+"\n";
   } else {

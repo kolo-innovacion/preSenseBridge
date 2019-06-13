@@ -8,7 +8,7 @@ String version="NOT DETECTED";
 int verStrLength=6;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
-boolean serConnect=true;
+boolean serConnect=false;
 
 //UDP VARIABLES
 import hypermedia.net.*;
@@ -39,7 +39,7 @@ int connFalse=color(255, 0, 0);
 void setup() {
   size(250, 150);
   loadConfig();
-  frameRate(30);
+  frameRate(60);
 
   serConnect=attemptSerial();
 
@@ -49,27 +49,30 @@ void setup() {
 void draw() {
   background(255, 255, 255);
   showInfo();
-  if (serConnect) {
 
-    if ( myPort.available() > 0) 
-    {
-      val = myPort.readStringUntil('\n');         // read it and store it in val
-    }
-  } else {
-    serConnect=attemptSerial();
-  }
+  readFromSensor();
+  reactReading();
+
+  //----------
+
+
+  checkStatus();
+  statusUpdate();
+}
+
+void reactReading() {
   if (val!=null) {
 
     if (val.equals(entryVal)) {
       //sendUDPacket(entryUDP);
       curr=true;
-      background(0, 255, 0);
+      background(255, 191, 0);
       showInfo();
     } else if (val.equals(exitVal)) {
 
       curr=false;
       //sendUDPacket(exitUDP);
-      background(255, 0, 0);
+      background(255, 255, 255);
       showInfo();
     } else if (val.length()==verStrLength) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
@@ -79,8 +82,18 @@ void draw() {
       //serconnect=true;
     }
   }
-  checkStatus();
-  statusUpdate();
+}
+
+void readFromSensor() {
+  if (serConnect) {
+
+    if ( myPort.available() > 0) 
+    {
+      val = myPort.readStringUntil('\n');         // read it and store it in val
+    }
+  } else {
+    serConnect=attemptSerial();
+  }
 }
 
 void checkStatus() {
@@ -100,9 +113,7 @@ void sendUDPacket(String input) {
 void showInfo() {
   int aux=25;
 
-  fill(connTrue);
-  noStroke();
-  rect(0, 0, width, 50);
+  displayConnection();
 
   fill(0);
   text("Serial port: "+comPort, 10, aux);
@@ -115,8 +126,18 @@ void showInfo() {
   aux+=20;  
   text("UDP msg on exit:  "+exitUDP, 10, aux);
   aux+=20;
-  text("END OF LINE after msg:  "+eol, 10, aux);
+  text("LINE FEED after msg:  "+linefeed, 10, aux);
   aux+=20;
+}
+
+void displayConnection() {
+  if (serConnect) {
+    fill(connTrue);
+  } else {
+    fill(connFalse);
+  }
+  noStroke();
+  rect(0, 0, width, 50);
 }
 
 boolean attemptSerial() {

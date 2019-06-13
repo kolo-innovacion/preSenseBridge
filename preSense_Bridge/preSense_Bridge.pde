@@ -37,8 +37,9 @@ int connFalse=color(255, 0, 0);
 
 
 void setup() {
-  size(250, 150);
+  size(350, 150);
   loadConfig();
+  guiSetup();
   frameRate(60);
 
   serConnect=attemptSerial();
@@ -49,6 +50,7 @@ void setup() {
 void draw() {
   background(255, 255, 255);
   showInfo();
+  image(absent, 200, 100);
 
   readFromSensor();
   reactReading();

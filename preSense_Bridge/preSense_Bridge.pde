@@ -1,4 +1,6 @@
 
+
+
 //SERIAL VARIABLES
 import processing.serial.*;
 Serial myPort;
@@ -39,6 +41,7 @@ void setup() {
   size(250, 200);
   loadConfig();
   guiSetup();
+  timerSetup();
   frameRate(60);
 
   serConnect=attemptSerial();
@@ -121,11 +124,14 @@ void sendUDPacket(String input) {
 void doEntry() {
   sendUDPacket(entryUDP);
   currentImg=entry;
+  timerEntry.start();
   //startTimer();
 }
 void doExit() {
   sendUDPacket(exitUDP);
   currentImg=exit;
+  timerEntry.stop();
+  timerExit.start();
 }
 
 void showInfo() {

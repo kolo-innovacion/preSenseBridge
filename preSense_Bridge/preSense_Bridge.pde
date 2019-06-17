@@ -49,7 +49,7 @@ void setup() {
 void draw() {
   background(255);
   showInfo();
-  image(current, 60, 150);
+  image(currentImg, 60, 150);
 
   readFromSensor();
   reactReading();
@@ -75,7 +75,7 @@ void reactReading() {
       curr=false;
       //sendUDPacket(exitUDP);
       //background(255, 255, 255);
-      current=absent;
+      currentImg=absent;
       showInfo();
     } else if (val.length()==verStrLength) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
@@ -101,10 +101,13 @@ void readFromSensor() {
 
 void checkStatus() {
   if ((curr==true)&&(prev==false)) {
-    sendUDPacket(entryUDP);
-    current=entry;
+    //sendUDPacket(entryUDP);
+    //currentImg=entry;
+
+    doEntry();
   } else if ((curr==false)&&(prev==true)) {
     sendUDPacket(exitUDP);
+    doExit();
     //current=exit;
   }
 }
@@ -113,6 +116,16 @@ void statusUpdate() {
 }
 void sendUDPacket(String input) {
   udp.send( input, targetIP, targetPort );
+}
+
+void doEntry() {
+  sendUDPacket(entryUDP);
+  currentImg=entry;
+  //startTimer();
+}
+void doExit() {
+  sendUDPacket(exitUDP);
+  currentImg=exit;
 }
 
 void showInfo() {
@@ -157,4 +170,12 @@ boolean attemptSerial() {
     return false;
   }
   return true;
+}
+
+void mousePressed() {
+  doEntry();
+}
+
+void mouseReleased() {
+  doExit();
 }

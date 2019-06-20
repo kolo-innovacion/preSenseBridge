@@ -52,7 +52,8 @@ void setup() {
 void draw() {
   background(255);
   showInfo();
-  image(currentImg, 60, 150);
+  currentImg.resize(54, 0);
+  image(currentImg, ((width/2)-26), 150);
 
   readFromSensor();
   reactReading();
@@ -141,17 +142,17 @@ void showInfo() {
 
   fill(0);
   text("Serial port: "+comPort, 10, aux);
-  aux+=20;
+  aux+=22;
   text("Firmware version: "+version, 10, aux);
-  aux+=28;
+  aux+=26;
   text("Target IP: "+targetIP+" on port "+targetPort, 10, aux);
-  aux+=20;  
+  aux+=24;  
   text("UDP msg on entry:  "+entryUDP, 10, aux);
-  aux+=20;  
+  aux+=24;  
   text("UDP msg on exit:  "+exitUDP, 10, aux);
-  aux+=20;
+  aux+=24;
   text("LINE FEED after msg:  "+linefeed, 10, aux);
-  aux+=20;
+  //aux+=20;
 
 
   image(logo, 254, 14);

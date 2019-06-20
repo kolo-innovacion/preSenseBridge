@@ -15,6 +15,8 @@ int timeDur=1000;//ms
 boolean entryTout=false;
 boolean exitTout=false;
 
+PFont myFont;
+
 void guiSetup() {
   absent = loadImage("absent.png");
   present = loadImage("present.png");
@@ -22,4 +24,7 @@ void guiSetup() {
   exit = loadImage("exit.png");
   logo=loadImage("koloLogo.png");
   currentImg = absent;
+  myFont=createFont("Tahoma", 14);
+  //myFont=createFont("Gill Sans MT", 24);
+  textFont(myFont);
 }

@@ -38,7 +38,7 @@ boolean prev=false;
 
 
 void setup() {
-  size(250, 200);
+  size(320, 200);
   loadConfig();
   guiSetup();
   timerSetup();
@@ -135,7 +135,7 @@ void doExit() {
 }
 
 void showInfo() {
-  int aux=25;
+  int aux=20;
 
   displayConnection();
 
@@ -143,7 +143,7 @@ void showInfo() {
   text("Serial port: "+comPort, 10, aux);
   aux+=20;
   text("Firmware version: "+version, 10, aux);
-  aux+=20;
+  aux+=28;
   text("Target IP: "+targetIP+" on port "+targetPort, 10, aux);
   aux+=20;  
   text("UDP msg on entry:  "+entryUDP, 10, aux);
@@ -152,6 +152,9 @@ void showInfo() {
   aux+=20;
   text("LINE FEED after msg:  "+linefeed, 10, aux);
   aux+=20;
+
+
+  image(logo, 254, 14);
 }
 
 void displayConnection() {

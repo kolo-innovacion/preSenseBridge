@@ -7,6 +7,7 @@ PImage absent;
 PImage present;
 PImage entry;
 PImage exit;
+PImage logo;
 
 int entryStart;
 int exitStart;
@@ -19,5 +20,6 @@ void guiSetup() {
   present = loadImage("present.png");
   entry = loadImage("entry.png");
   exit = loadImage("exit.png");
+  logo=loadImage("koloLogo.png");
   currentImg = absent;
 }

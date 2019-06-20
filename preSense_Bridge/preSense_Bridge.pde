@@ -53,8 +53,7 @@ void setup() {
 void draw() {
   background(255);
   showInfo();
-  currentImg.resize(54, 0);
-  image(currentImg, ((width/2)-26), 150);
+
 
   readFromSensor();
   reactReading();
@@ -74,14 +73,14 @@ void reactReading() {
       curr=true;
       //background(255, 191, 0);
       //current=entry;
-      showInfo();
+      //showInfo();
     } else if (val.equals(exitVal)) {
 
       curr=false;
       //sendUDPacket(exitUDP);
       //background(255, 255, 255);
       //currentImg=absent;
-      showInfo();
+      //showInfo();
     } else if (val.length()==verStrLength) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
@@ -158,6 +157,10 @@ void showInfo() {
 
 
   image(logo, 254, 14);
+
+  currentImg.resize(54, 0);
+  image(currentImg, ((width/2)-26), 150);
+  tint(0, 255, 0);
 }
 
 void displayConnection() {

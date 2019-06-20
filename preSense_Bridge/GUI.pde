@@ -1,5 +1,6 @@
 int connTrue=color(0, 255, 0);
 int connFalse=color(255, 0, 0);
+int connAlert=color(255, 127, 0);
 
 PImage currentImg;
 

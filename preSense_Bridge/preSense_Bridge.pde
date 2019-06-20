@@ -11,6 +11,7 @@ int verStrLength=6;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
 boolean serConnect=false;
+int serStatus=0;//0 is not connected, 1 is connected, 2 is pending
 
 //UDP VARIABLES
 import hypermedia.net.*;
@@ -44,7 +45,7 @@ void setup() {
   timerSetup();
   frameRate(60);
 
-  serConnect=attemptSerial();
+  serStatus=attemptSerial();
 
   udp = new UDP( this, 6000 );
 }
@@ -85,6 +86,7 @@ void reactReading() {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
       //println(val.length());
+      serStatus=1;//connection is correct; status passes from 2 to 1
       version=val;
       //serconnect=true;
     }
@@ -92,14 +94,14 @@ void reactReading() {
 }
 
 void readFromSensor() {
-  if (serConnect) {
+  if (serStatus>0) {
 
     if ( myPort.available() > 0) 
     {
       val = myPort.readStringUntil('\n');         // read it and store it in val
     }
   } else {
-    serConnect=attemptSerial();
+    serStatus=attemptSerial();
   }
 }
 
@@ -159,8 +161,10 @@ void showInfo() {
 }
 
 void displayConnection() {
-  if (serConnect) {
+  if (serStatus==1) {
     fill(connTrue);
+  } else if (serStatus==2) {
+    fill(connAlert);
   } else {
     fill(connFalse);
   }
@@ -168,7 +172,7 @@ void displayConnection() {
   rect(0, 0, width, 50);
 }
 
-boolean attemptSerial() {
+boolean attemptSerial0() {
   try {
     myPort = new Serial(this, comPort, 9600);
 
@@ -180,6 +184,20 @@ boolean attemptSerial() {
     return false;
   }
   return true;
+}
+
+int attemptSerial() {
+  try {
+    myPort = new Serial(this, comPort, 9600);
+
+    //version=myPort.readStringUntil('\n');  
+    //println(version);
+  }
+  catch(Exception e) {
+    //println(e);
+    return 0;
+  }
+  return 2;
 }
 
 void mousePressed() {

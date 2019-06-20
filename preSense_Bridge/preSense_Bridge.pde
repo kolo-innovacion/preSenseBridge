@@ -79,7 +79,7 @@ void reactReading() {
       curr=false;
       //sendUDPacket(exitUDP);
       //background(255, 255, 255);
-      currentImg=absent;
+      //currentImg=absent;
       showInfo();
     } else if (val.length()==verStrLength) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version

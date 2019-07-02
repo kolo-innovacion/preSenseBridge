@@ -6,7 +6,8 @@ CountdownTimer timerExit;
 int dispDur=400;
 void timerSetup() {
   timerEntry = CountdownTimerService.getNewCountdownTimer(this).configure(100, dispDur);
-  timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, dispDur);
+  //timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, dispDur);
+  timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, 5000);
 }
 
 void onTickEvent(CountdownTimer t, long timeLeftUntilFinish) {
@@ -26,6 +27,8 @@ void onFinishEvent(CountdownTimer t) {
   case 1:
     //println("LlLl");
     currentImg=absent;
+
+    sendUDPacket(exitUDP);
     break;
   }
 }

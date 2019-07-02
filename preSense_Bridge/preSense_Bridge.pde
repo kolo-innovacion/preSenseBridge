@@ -44,7 +44,7 @@ void setup() {
   loadConfig();
   guiSetup();
   timerSetup();
-  frameRate(60);
+  frameRate(120);
 
   serStatus=attemptSerial();
 
@@ -112,7 +112,7 @@ void checkStatus() {
 
     doEntry();
   } else if ((curr==false)&&(prev==true)) {
-    sendUDPacket(exitUDP);
+    //sendUDPacket(exitUDP);
     doExit();
     //current=exit;
   }
@@ -125,15 +125,19 @@ void sendUDPacket(String input) {
 }
 
 void doEntry() {
-  sendUDPacket(entryUDP);
+  if (timerExit.isRunning()) {
+  } else {
+    sendUDPacket(entryUDP);
+  }
   currentImg=entry;
   timerEntry.start();
   //startTimer();
 }
 void doExit() {
-  sendUDPacket(exitUDP);
+  //sendUDPacket(exitUDP);
   currentImg=exit;
   timerEntry.stop();
+  //timerExit.reset();
   timerExit.start();
 }
 

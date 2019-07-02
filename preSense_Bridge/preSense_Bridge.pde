@@ -8,6 +8,7 @@ String comPort;
 String val;
 String version="NOT DETECTED";
 int verStrLength=6;
+int verStrLengthMax=10;
 String entryVal="preSenseEntry\n";
 String exitVal="preSenseExit\n";
 boolean serConnect=false;
@@ -81,7 +82,7 @@ void reactReading() {
       //background(255, 255, 255);
       //currentImg=absent;
       //showInfo();
-    } else if (val.length()==verStrLength) {
+    } else if ((val.length()>=verStrLength)&&(val.length()<=verStrLengthMax)) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
       //println(val.length());

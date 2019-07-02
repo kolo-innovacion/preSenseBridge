@@ -7,7 +7,7 @@ int dispDur=400;
 void timerSetup() {
   timerEntry = CountdownTimerService.getNewCountdownTimer(this).configure(100, dispDur);
   //timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, dispDur);
-  timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, 5000);
+  timerExit = CountdownTimerService.getNewCountdownTimer(this).configure(100, delExit);
 }
 
 void onTickEvent(CountdownTimer t, long timeLeftUntilFinish) {

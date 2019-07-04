@@ -44,7 +44,7 @@ void setup() {
   loadConfig();
   guiSetup();
   timerSetup();
-  frameRate(120);
+  frameRate(30);
 
   serStatus=attemptSerial();
 
@@ -71,8 +71,15 @@ void reactReading() {
   if (val!=null) {
 
     if (val.equals(entryVal)) {
+
+      //case positive
       println(entryVal+"  "+aux);
+      sendUDPacket(entryUDP);
+      delay(5000);
       aux++;
+      //timerEntry.stop();
+      //timerEntry.reset();
+      //timerEntry.start();
       //sendUDPacket(entryUDP);
       curr=true;
       //background(255, 191, 0);
@@ -115,6 +122,7 @@ void checkStatus() {
     //sendUDPacket(entryUDP);
     //currentImg=entry;
 
+
     doEntry();
   } else if ((curr==false)&&(prev==true)) {
     //sendUDPacket(exitUDP);
@@ -135,13 +143,13 @@ void doEntry() {
     sendUDPacket(entryUDP);
   }
   currentImg=entry;
-  timerEntry.start();
+  //timerEntry.start();
   //startTimer();
 }
 void doExit() {
   //sendUDPacket(exitUDP);
   currentImg=exit;
-  timerEntry.stop();
+  //timerEntry.stop();
   //timerExit.reset();
   timerExit.start();
 }

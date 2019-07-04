@@ -58,6 +58,7 @@ void draw() {
 
   readFromSensor();
   reactReading();
+  resetVal();
 
   //----------
 
@@ -65,11 +66,13 @@ void draw() {
   checkStatus();
   statusUpdate();
 }
-
+int aux=0;
 void reactReading() {
   if (val!=null) {
 
     if (val.equals(entryVal)) {
+      println(entryVal+"  "+aux);
+      aux++;
       //sendUDPacket(entryUDP);
       curr=true;
       //background(255, 191, 0);
@@ -92,7 +95,9 @@ void reactReading() {
     }
   }
 }
-
+void resetVal() {
+  val=null;
+}
 void readFromSensor() {
   if (serStatus>0) {
 

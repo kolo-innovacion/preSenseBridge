@@ -67,24 +67,22 @@ void draw() {
   statusUpdate();
 }
 int aux=0;
+int lastTime=0;
+int freeze=5000;
+
 void reactReading() {
   if (val!=null) {
 
     if (val.equals(entryVal)) {
-
+      if (millis()>=lastTime+freeze) {
+        println(entryVal+"  "+aux);
+        sendUDPacket(entryUDP);
+      } else {
+      }
       //case positive
-      println(entryVal+"  "+aux);
-      sendUDPacket(entryUDP);
-      delay(5000);
+      lastTime=millis();
       aux++;
-      //timerEntry.stop();
-      //timerEntry.reset();
-      //timerEntry.start();
-      //sendUDPacket(entryUDP);
       curr=true;
-      //background(255, 191, 0);
-      //current=entry;
-      //showInfo();
     } else if (val.equals(exitVal)) {
 
       curr=false;
@@ -140,7 +138,7 @@ void sendUDPacket(String input) {
 void doEntry() {
   if (timerExit.isRunning()) {
   } else {
-    sendUDPacket(entryUDP);
+    //sendUDPacket(entryUDP);
   }
   currentImg=entry;
   //timerEntry.start();

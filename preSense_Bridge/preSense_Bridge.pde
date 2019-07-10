@@ -1,54 +1,17 @@
-
-
-
-//SERIAL VARIABLES
-import processing.serial.*;
-Serial myPort;
-String comPort;
-String val;
-String version="NOT DETECTED";
-int verStrLength=6;
-int verStrLengthMax=10;
-String entryVal="preSenseEntry\n";
-String exitVal="preSenseExit\n";
-boolean serConnect=false;
-int serStatus=0;//0 is not connected, 1 is connected, 2 is pending
-
-//UDP VARIABLES
-import hypermedia.net.*;
-UDP udp;
-
-//String ip       = "192.168.0.17";  // the remote IP address
-//String targetIP = "localhost";  // the remote IP address
-//int targetPort = 5000;
-
-//String entryUDP="SV:1200:1\n";
-//String exitUDP="SV:1200:0\n";
-
-String targetIP; // the remote IP address
-int targetPort;
-
-String entryUDP;
-String exitUDP;
-
 //OTHER VARS
 boolean curr=false;
 boolean prev=false;
 
 //gui vars
 
-
-
 void setup() {
   size(320, 200);
   loadConfig();
-  guiSetup();
-  timerSetup();
+  setupGUI();
+  setupTimer();
   frameRate(120);
-
-  serStatus=attemptSerial();
-
-  udp = new UDP( this, 6000 );
+  updateSerialStatus();
+  setupUDP();
 }
 
 void draw() {
@@ -75,6 +38,7 @@ void reactReading() {
       //background(255, 191, 0);
       //current=entry;
       //showInfo();
+      println("SERIAL ENTRY");
     } else if (val.equals(exitVal)) {
 
       curr=false;
@@ -82,6 +46,7 @@ void reactReading() {
       //background(255, 255, 255);
       //currentImg=absent;
       //showInfo();
+      println("SERIAL EXIT");
     } else if ((val.length()>=verStrLength)&&(val.length()<=verStrLengthMax)) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
@@ -91,6 +56,8 @@ void reactReading() {
       //serconnect=true;
     }
   }
+  //clear value!!!
+  val=null;
 }
 
 void readFromSensor() {
@@ -194,19 +161,7 @@ boolean attemptSerial0() {
   return true;
 }
 
-int attemptSerial() {
-  try {
-    myPort = new Serial(this, comPort, 9600);
 
-    //version=myPort.readStringUntil('\n');  
-    //println(version);
-  }
-  catch(Exception e) {
-    //println(e);
-    return 0;
-  }
-  return 2;
-}
 
 void mousePressed() {
   doEntry();

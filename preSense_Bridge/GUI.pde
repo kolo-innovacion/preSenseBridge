@@ -18,7 +18,7 @@ boolean exitTout=false;
 
 PFont myFont;
 
-void guiSetup() {
+void setupGUI() {
   absent = loadImage("absent.png");
   present = loadImage("present.png");
   entry = loadImage("entry.png");

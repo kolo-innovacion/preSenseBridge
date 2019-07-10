@@ -11,6 +11,7 @@ String exitVal="preSenseExit\n";
 boolean serConnect=false;
 int serStatus=0;//0 is not connected, 1 is connected, 2 is pending
 
+//functions
 int attemptSerial() {
   try {
     myPort = new Serial(this, comPort, 9600);
@@ -27,4 +28,16 @@ int attemptSerial() {
 
 void updateSerialStatus() {
   serStatus=attemptSerial();
+}
+
+void readFromSensor() {
+  if (serStatus>0) {
+
+    if ( myPort.available() > 0) 
+    {
+      val = myPort.readStringUntil('\n');         // read it and store it in val
+    }
+  } else {
+    serStatus=attemptSerial();
+  }
 }

@@ -29,3 +29,42 @@ void setupGUI() {
   //myFont=createFont("Gill Sans MT", 24);
   textFont(myFont);
 }
+
+void showInfo() {
+  int aux=20;
+
+  displayConnection();
+
+  fill(0);
+  text("Serial port: "+comPort, 10, aux);
+  aux+=22;
+  text("Firmware version: "+version, 10, aux);
+  aux+=26;
+  text("Target IP: "+targetIP+" on port "+targetPort, 10, aux);
+  aux+=24;  
+  text("UDP msg on entry:  "+entryUDP, 10, aux);
+  aux+=24;  
+  text("UDP msg on exit:  "+exitUDP, 10, aux);
+  aux+=24;
+  text("LINE FEED after msg:  "+linefeed, 10, aux);
+  //aux+=20;
+
+
+  image(logo, 254, 14);
+
+  currentImg.resize(54, 0);
+  image(currentImg, ((width/2)-26), 150);
+  tint(0, 255, 0);
+}
+
+void displayConnection() {
+  if (serStatus==1) {
+    fill(connTrue);
+  } else if (serStatus==2) {
+    fill(connAlert);
+  } else {
+    fill(connFalse);
+  }
+  noStroke();
+  rect(0, 0, width, 50);
+}

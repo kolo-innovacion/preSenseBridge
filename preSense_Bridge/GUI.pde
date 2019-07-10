@@ -26,7 +26,6 @@ void setupGUI() {
   logo=loadImage("koloLogo.png");
   currentImg = absent;
   myFont=createFont("Tahoma", 14);
-  //myFont=createFont("Gill Sans MT", 24);
   textFont(myFont);
 }
 
@@ -47,7 +46,6 @@ void showInfo() {
   text("UDP msg on exit:  "+exitUDP, 10, aux);
   aux+=24;
   text("LINE FEED after msg:  "+linefeed, 10, aux);
-  //aux+=20;
 
 
   image(logo, 254, 14);

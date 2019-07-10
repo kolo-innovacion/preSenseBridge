@@ -1,6 +1,5 @@
 XML config;
 boolean linefeed;
-int delExit;
 void loadConfig() {
   config = loadXML("config.xml");
 
@@ -10,15 +9,12 @@ void loadConfig() {
   entryUDP=config.getString("entryMsg", "SV:1200:1\n");
   exitUDP=config.getString("exitMsg", "SV:1200:0\n");
   linefeed=boolean(config.getInt("LF", 1));
-  delExit=config.getInt("delayForExit", 5)*1000;
 
   if (linefeed) {
     entryUDP=entryUDP+"\n";
     exitUDP=exitUDP+"\n";
   } else {
   }
-
-  //verboseConfig();
 }
 
 void verboseConfig() {

@@ -15,12 +15,8 @@ int serStatus=0;//0 is not connected, 1 is connected, 2 is pending
 int attemptSerial() {
   try {
     myPort = new Serial(this, comPort, 9600);
-
-    //version=myPort.readStringUntil('\n');  
-    //println(version);
   }
   catch(Exception e) {
-    //println(e);
     return 0;
   }
   return 2;

@@ -1,2 +1,2 @@
-<config comPort="COM4" targetIP="localhost" targetPort="5000" entryMsg="SV:1200:1" exitMsg="SV:1200:0" LF="1" delayForExit="120">
+<config comPort="COM4" targetIP="localhost" targetPort="5000" entryMsg="SV:1200:1" exitMsg="SV:1200:0" LF="1" >
 </config>

@@ -43,8 +43,8 @@ void showInfo() {
   aux+=24;  
   text("UDP msg on entry:  "+entryUDP, 10, aux);
   aux+=24;  
-  text("UDP msg on exit:  "+exitUDP, 10, aux);
-  aux+=24;
+  //text("UDP msg on exit:  "+exitUDP, 10, aux);
+  //aux+=24;
   text("LINE FEED after msg:  "+linefeed, 10, aux);
 
 

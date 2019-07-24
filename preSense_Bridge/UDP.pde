@@ -6,7 +6,7 @@ String targetIP; // the remote IP address
 int targetPort;
 
 String entryUDP;
-String exitUDP;
+//String exitUDP;
 
 void setupUDP() {
 

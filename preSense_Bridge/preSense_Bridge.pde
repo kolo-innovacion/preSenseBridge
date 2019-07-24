@@ -1,10 +1,12 @@
 //preSense Bridge 1.0.0 compiled
 boolean curr=false;
 boolean prev=false;
-
 void setup() {
+  //surface.setLocation(0, 0);
+
+  surface.setTitle("preSense Bridge v.1.0.0");
   size(320, 200);
-  frameRate(120);
+  frameRate(60);
 
   loadConfig();
   setupGUI();
@@ -27,11 +29,11 @@ void reactReading() {
 
     if (val.equals(entryVal)) {
       curr=true;
-      println("SERIAL ENTRY");
+      //println("SERIAL ENTRY");
     } else if (val.equals(exitVal)) {
 
       curr=false;
-      println("SERIAL EXIT");
+      //println("SERIAL EXIT");
     } else if ((val.length()>=verStrLength)&&(val.length()<=verStrLengthMax)) {
       //if the string comes from the serial port and is not the entry or exit value, it is assumed that it is the firmware version
       //the firmware version is used as a check fto confirm that serial comm with the preSense processor has been achieved
@@ -65,7 +67,7 @@ void doEntry() {
 }
 
 void doExit() {
-  currentImg=exit;
+  currentImg=absent;
   timerEntry.stop();
   timerExit.start();
 }
